@@ -1,0 +1,46 @@
+ <!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <script>
+        //Parse query string helper function
+        function getParameterByName(name, url = window.location.href) 
+        {
+                name = name.replace(/[\[\]]/g, '\\$&');
+                var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'), results = regex.exec(url);
+
+                if (!results) 
+                {
+                        return null;
+                }
+
+                if (!results[2]) 
+                {
+                        return '';
+                }
+
+                    return decodeURIComponent(results[2].replace(/\+/g, ' '));
+        }
+
+        //Get auth code from query string
+        var code = getParameterByName('code');
+        //Get state from query string
+        var state = getParameterByName('state');
+
+        window.opener.postMessage(code + "," + state, "*")
+     
+        try 
+        {
+                window.close();
+        }
+        catch (e) { console.log(e) }
+
+        try 
+        {
+                self.close();
+        }
+        catch (e) { console.log(e) }       
+    </script>
+</head>
+<body>
+</body>
+</html>
