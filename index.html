@@ -3,13 +3,13 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity WebGL Player | OktaAuth2</title>
+    <title>Unity WebGL Player | Interactive</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
   </head>
   <body>
     <div id="unity-container" class="unity-desktop">
-      <canvas id="unity-canvas" width=960 height=600></canvas>
+      <canvas id="unity-canvas"></canvas>
       <div id="unity-loading-bar">
         <div id="unity-logo"></div>
         <div id="unity-progress-bar-empty">
@@ -22,20 +22,21 @@
       <div id="unity-footer">
         <div id="unity-webgl-logo"></div>
         <div id="unity-fullscreen-button"></div>
-        <div id="unity-build-title">OktaAuth2</div>
+        <div id="unity-build-title">Interactive</div>
       </div>
     </div>
     <script>
       var buildUrl = "Build";
-      var loaderUrl = buildUrl + "/WebGL.loader.js";
+      var loaderUrl = buildUrl + "/temp.loader.js";
       var config = {
-        dataUrl: buildUrl + "/WebGL.data.unityweb",
-        frameworkUrl: buildUrl + "/WebGL.framework.js.unityweb",
-        codeUrl: buildUrl + "/WebGL.wasm.unityweb",
+        dataUrl: buildUrl + "/temp.data.gz",
+        frameworkUrl: buildUrl + "/temp.framework.js.gz",
+        codeUrl: buildUrl + "/temp.wasm.gz",
+        symbolsUrl: buildUrl + "/temp.symbols.json.gz",
         streamingAssetsUrl: "StreamingAssets",
-        companyName: "DefaultCompany",
-        productName: "OktaAuth2",
-        productVersion: "0.1",
+        companyName: "Agile Literacy, LLC",
+        productName: "Interactive",
+        productVersion: "1.3.5",
       };
 
       var container = document.querySelector("#unity-container");
@@ -45,17 +46,8 @@
       var fullscreenButton = document.querySelector("#unity-fullscreen-button");
       var mobileWarning = document.querySelector("#unity-mobile-warning");
 
-      // By default Unity keeps WebGL canvas render target size matched with
-      // the DOM size of the canvas element (scaled by window.devicePixelRatio)
-      // Set this to false if you want to decouple this synchronization from
-      // happening inside the engine, and you would instead like to size up
-      // the canvas DOM size and WebGL render target sizes yourself.
-      // config.matchWebGLToCanvasSize = false;
-
       if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
         container.className = "unity-mobile";
-        // Avoid draining fillrate performance on mobile devices,
-        // and default/override low DPI mode on mobile browsers.
         config.devicePixelRatio = 1;
         mobileWarning.style.display = "block";
         setTimeout(() => {
@@ -82,20 +74,6 @@
         });
       };
       document.body.appendChild(script);
-	  
-	  function startAuth(authorizationRequest) 
-{
-        window.addEventListener('message', function (e) 
-        {
-                unityInstance.SendMessage("OAuth2", "getAuthResults", data);
-        }, false);
-
-        var childwin;
-        const childname = "Authenticate";
-        childwin = window.open(authorizationRequest, childname, 'height=300px, width=500px');
-
-        childwin.focus();
-};
     </script>
   </body>
 </html>
